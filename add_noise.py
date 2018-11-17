@@ -1,17 +1,30 @@
 import numpy as np
-import os
 import cv2
 
 
 def noisy(noise_typ, image):
     if noise_typ == "gauss":
         row, col = image.shape
-        mean = 10
+        mean = 0
         var = 2
         sigma = var ** 4
         gauss = np.random.normal(mean, sigma, (row, col))
         gauss = gauss.reshape(row, col)
         noisy = image + gauss
+        return noisy
+    elif noise_typ == "reyleigh":
+        row, col = image.shape
+        mean_value = 15
+        mode_value = np.sqrt(2 / np.pi) * mean_value
+        reyleigh = np.random.rayleigh(mode_value, (row, col))
+        reyleigh = reyleigh.reshape(row, col)
+        noisy = image + reyleigh
+        return noisy
+    elif noise_typ == "uniform":
+        row, col = image.shape
+        uniform = np.random.uniform(-10, 50, (row, col))
+        uniform = uniform.reshape(row, col)
+        noisy = image + uniform
         return noisy
     elif noise_typ == "salt":
         s_vs_p = 0.5
@@ -51,6 +64,6 @@ def noisy(noise_typ, image):
         return out
 
 image = cv2.imread("lenna.png", 0)
-noisy_image = noisy("sp", image)
+noisy_image = noisy("gauss", image)
 noisy_image = noisy_image.astype('uint8')
-cv2.imwrite('saltnpepper.png', noisy_image)
+cv2.imwrite('gaussian.png', noisy_image)
