@@ -9,7 +9,7 @@ def median_filter(image):
         for col in range(width):
             pixel = get_neighbors(row, col, image, 1)
             pixel.sort()
-            median_image[row, col] = pixel[4]
+            median_image[row, col] = pixel[int(pixel.size/2)]
 
     return median_image
 
@@ -85,21 +85,21 @@ def get_neighbors(row, col, img, distance):
 
 
 lenna = cv2.imread("Lenna.png", 0)
-image = cv2.imread("gaussian.png", 0)
+image = cv2.imread("uniform.png", 0)
 restored_image = alpha_trimmed_mean(image)
 cv2.imshow("lenna", lenna)
 cv2.imshow("noise_image", image)
 cv2.imshow("restored_image", restored_image)
 cv2.waitKey(0)
 
-from matplotlib import pyplot as plt
-
-plt.figure("noise")
-plt.hist(image.ravel(), 256, [0, 256])
-
-plt.figure("restored")
-plt.hist(restored_image.ravel(), 256, [0, 256])
-
-plt.figure("lenna")
-plt.hist(lenna.ravel(), 256, [0, 256])
-plt.show()
+# from matplotlib import pyplot as plt
+#
+# plt.figure("noise")
+# plt.hist(image.ravel(), 256, [0, 256])
+#
+# plt.figure("restored")
+# plt.hist(restored_image.ravel(), 256, [0, 256])
+#
+# plt.figure("lenna")
+# plt.hist(lenna.ravel(), 256, [0, 256])
+# plt.show()

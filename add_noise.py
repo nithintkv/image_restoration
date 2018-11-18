@@ -22,7 +22,7 @@ def noisy(noise_typ, image):
         return noisy
     elif noise_typ == "uniform":
         row, col = image.shape
-        uniform = np.random.uniform(-10, 50, (row, col))
+        uniform = np.random.uniform(-10, 30, (row, col))
         uniform = uniform.reshape(row, col)
         noisy = image + uniform
         return noisy
@@ -64,6 +64,6 @@ def noisy(noise_typ, image):
         return out
 
 image = cv2.imread("lenna.png", 0)
-noisy_image = noisy("gauss", image)
+noisy_image = noisy("uniform", image)
 noisy_image = noisy_image.astype('uint8')
-cv2.imwrite('gaussian.png', noisy_image)
+cv2.imwrite('uniform.png', noisy_image)
